@@ -1,0 +1,15 @@
+[package]
+name = "cpdd"
+version = "0.1.0"
+authors = [ "selendym <selendym@tuta.io>" ]
+edition = "2018"
+
+[dependencies]
+log = "0.4"
+# lib
+blake2b_simd = "0.5"
+filetime = "0.2"
+reflink = "0.1"
+# bin
+simplelog = "0.7"
+structopt = "0.3"
