@@ -48,7 +48,7 @@ struct CliArgs
     /// The log path.
     ///
     /// By default, log output is written only to stderr.
-    /// If this option is set, log output is also written to the given path.
+    /// If this option is set, log output is written also to the given path.
     log_path: Option< String >,
 
     #[ structopt( subcommand ) ]
@@ -71,6 +71,13 @@ enum Action
         /// Note that existing destination directories are not overwritten
         /// but are merged or renamed, depending on the source file type.
         overwrite_dst: bool,
+
+        #[ structopt( long = "skip-invalid" ) ]
+        /// Skip invalid source file types.
+        ///
+        /// By default, invalid source file types result in an error.
+        /// If this option is set, invalid file types result only in a warning.
+        skip_invalid_file_types: bool,
 
         #[ structopt( long, default_value = "~" ) ]
         /// The backup suffix to use for renaming existing destination paths.
@@ -171,6 +178,7 @@ fn main()
         Action::Copy{
             recurse_dirs,
             overwrite_dst,
+            skip_invalid_file_types,
             backup_suffix,
             reflink_dir,
             dst_dir,
@@ -238,6 +246,7 @@ fn main()
                     &reflink_dir,
                     recurse_dirs,
                     overwrite_dst,
+                    skip_invalid_file_types,
                     &backup_suffix,
                 ) );
             }

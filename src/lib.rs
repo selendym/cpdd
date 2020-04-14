@@ -26,6 +26,7 @@ pub fn cpdd< P, Q, R >(
     reflink_dir: R,
     recurse_dirs: bool,
     overwrite_dst: bool,
+    skip_invalid_file_types: bool,
     backup_suffix: &str,
 ) -> std::io::Result< () >
 where
@@ -68,6 +69,7 @@ where
                     reflink_dir,
                     recurse_dirs,
                     overwrite_dst,
+                    skip_invalid_file_types,
                     backup_suffix,
                 )?;
             }
@@ -92,6 +94,12 @@ where
             src_path,
             src_file_type,
         );
+
+        if skip_invalid_file_types {
+            log::warn!( "{}", error_msg );
+
+            return Ok( () );
+        }
 
         log::error!( "{}", error_msg );
 

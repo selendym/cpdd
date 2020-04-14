@@ -8,7 +8,8 @@
 ## Overview
 
 cpdd is a copy and deduplication tool that uses reflinking for the deduplication.
-cpdd recognizes directories, files, and symlinks, and copies these from the source paths to the destination directory; other file types are not supported and result in an error.
+cpdd recognizes directories, files, and symlinks, and copies these from the source paths to the destination directory.
+Other file types are not supported and by default result in an error; if `--skip-invalid` is given, other file types result only in a warning.
 File times and permissions are preserved.
 
 cpdd was written to allow merging of directory trees that may share content without requiring space for duplicate entries.
@@ -68,7 +69,7 @@ The compiled executable will be in `target/release/cpdd`.
 
 ```
 $ cpdd --help
-cpdd 0.1.0
+cpdd 0.1.1
 selendym <selendym@tuta.io>
 This program is a simple copy and deduplication tool
 
@@ -90,7 +91,7 @@ OPTIONS:
         --log-path <log-path>
             The log path.
 
-            By default, log output is written only to stderr. If this option is set, log output is also written to the
+            By default, log output is written only to stderr. If this option is set, log output is written also to the
             given path.
 
 SUBCOMMANDS:
@@ -102,7 +103,7 @@ SUBCOMMANDS:
 
 ```
 $ cpdd copy --help
-cpdd-copy 0.1.0
+cpdd-copy 0.1.1
 Copy and deduplicate source paths to the destination directory
 
 USAGE:
@@ -120,6 +121,11 @@ FLAGS:
         --recurse
             Recurse source directories
 
+        --skip-invalid
+            Skip invalid source file types.
+
+            By default, invalid source file types result in an error. If this option is set, invalid file types result
+            only in a warning.
     -V, --version
             Prints version information
 
